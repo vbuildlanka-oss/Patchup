@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a0d14" />
+  <title>For You &middot; A Little Forever</title>
+  <meta name="description" content="A quiet promise, written in petals and light." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B9%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+
+  <!-- ===== Opening Gate ===== -->
+  <div class="gate" id="gate">
+    <div class="gate__inner">
+      <div class="gate__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="42" height="42"><path d="M12 21s-7.5-4.9-10-9.2C.4 8.6 1.9 5 5.2 5c2 0 3.3 1.2 4.1 2.4C10.1 6.2 11.4 5 13.4 5 16.7 5 18.2 8.6 16.6 11.8 14 16.1 12 21 12 21z"/></svg>
+      </div>
+      <p class="gate__eyebrow">a little something, just for you</p>
+      <h1 class="gate__title">Before you say anything&hellip;</h1>
+      <p class="gate__sub">Give me a few quiet minutes. Turn your sound on if you can.</p>
+      <button class="gate__btn" id="beginBtn">
+        <span>Open with me</span>
+      </button>
+      <p class="gate__hint">best experienced with headphones &middot; scroll gently</p>
+    </div>
+  </div>
+
+  <!-- ===== Ambient canvas (petals) ===== -->
+  <canvas class="petals" id="petals" aria-hidden="true"></canvas>
+
+  <!-- ===== Floating controls ===== -->
+  <div class="hud" id="hud" aria-hidden="false">
+    <button class="hud__btn" id="musicBtn" title="Play / pause music" aria-label="Toggle music">
+      <span class="hud__eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="hud__label" id="musicLabel">music</span>
+    </button>
+  </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <main id="story">
+
+    <!-- ===== 1. HERO ===== -->
+    <section class="scene scene--hero" id="hero">
+      <div class="bg parallax" data-speed="0.28" style="background-image:url('assets/img/embrace.jpg')"></div>
+      <div class="bg__tint"></div>
+      <div class="scene__content center">
+        <p class="eyebrow reveal">for you, and only you</p>
+        <h1 class="display hero__title reveal" data-delay="1">
+          <span>Us,</span>
+          <em>still worth it.</em>
+        </h1>
+        <p class="lede reveal" data-delay="2">
+          I know things have felt heavy lately. Before another day slips by,
+          I wanted to build you somewhere soft to land.
+        </p>
+        <div class="scrollcue reveal" data-delay="3" aria-hidden="true">
+          <span></span> scroll
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2. LATELY (rough patches) ===== -->
+    <section class="scene scene--split" id="lately">
+      <div class="bg parallax" data-speed="0.16" style="background-image:url('assets/img/citynight.jpg')"></div>
+      <div class="bg__tint bg__tint--deep"></div>
+      <div class="scene__content narrow">
+        <p class="eyebrow reveal">the honest part</p>
+        <h2 class="display reveal" data-delay="1">We&rsquo;ve hit some rough patches.</h2>
+        <p class="body reveal" data-delay="2">
+          I&rsquo;m not going to pretend they didn&rsquo;t happen. There were nights we
+          got it wrong, words that landed harder than we meant, silences that
+          stretched too long.
+        </p>
+        <p class="body reveal" data-delay="3">
+          But a rough patch is still a patch of the same road &mdash; the one
+          <em>we&rsquo;re</em> on, together. I&rsquo;d rather mend it with you than walk a
+          smoother one alone.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== 3. YOU'RE TIRED ===== -->
+    <section class="scene scene--split flip" id="tired">
+      <div class="bg parallax" data-speed="0.16" style="background-image:url('assets/img/campfire.jpg')"></div>
+      <div class="bg__tint"></div>
+      <div class="scene__content narrow">
+        <p class="eyebrow reveal">i see you</p>
+        <h2 class="display reveal" data-delay="1">You&rsquo;re so tired, my love.</h2>
+        <p class="body reveal" data-delay="2">
+          You give everything to your days. You come home carrying a weight
+          nobody else sees, and still you keep going. I notice. I always notice.
+        </p>
+        <p class="body reveal" data-delay="3">
+          So here&rsquo;s the deal: you don&rsquo;t have to be strong every minute.
+          Not with me. Lean here. Close your eyes. Let me hold the heavy end for a while.
+        </p>
+        <blockquote class="quote reveal" data-delay="4">
+          &ldquo;Rest. I&rsquo;ve got us.&rdquo;
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ===== 4. THE LOVE LETTER ===== -->
+    <section class="scene scene--letter" id="letter">
+      <div class="bg parallax" data-speed="0.12" style="background-image:url('assets/img/rose.jpg')"></div>
+      <div class="bg__tint bg__tint--letter"></div>
+      <div class="scene__content">
+        <article class="letter reveal">
+          <p class="letter__salut">To you,</p>
+          <p>
+            You once asked why I didn&rsquo;t just let it end when it got hard.
+            Here&rsquo;s the truth I keep coming back to:
+          </p>
+          <p class="letter__big">
+            I couldn&rsquo;t let go, because I love you &mdash; and because I
+            couldn&rsquo;t stand the thought of you facing any of this alone.
+          </p>
+          <p>
+            Ending things would have been the easy exit. But easy was never
+            what I wanted. I wanted <em>you</em> &mdash; on the good days and the
+            impossible ones. When you&rsquo;re soft and when you&rsquo;re spiky.
+            When it&rsquo;s effortless and when we have to choose each other on purpose.
+          </p>
+          <p>
+            So I&rsquo;m choosing. Quietly, stubbornly, every single day.
+            I want to be your calm after the loud hours, the shoulder you
+            lean on, the hand you reach for in the dark without having to look.
+          </p>
+          <p class="letter__sign">&mdash; always, me</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== 5. REPLACING MEMORIES ===== -->
+    <section class="scene scene--split" id="memories">
+      <div class="bg parallax" data-speed="0.18" style="background-image:url('assets/img/poppies.jpg')"></div>
+      <div class="bg__tint bg__tint--light"></div>
+      <div class="scene__content narrow">
+        <p class="eyebrow reveal">a promise about the past</p>
+        <h2 class="display reveal" data-delay="1">Every hard memory &mdash; I want to gently replace it.</h2>
+        <p class="body reveal" data-delay="2">
+          I can&rsquo;t erase what hurt you before me. I wouldn&rsquo;t try to.
+          But I can spend our tomorrows laying down new memories, so soft and
+          so many that the old aches have somewhere kinder to rest.
+        </p>
+        <ul class="swap reveal" data-delay="3">
+          <li><span class="swap__old">a night you cried alone</span><span class="swap__arrow">&rarr;</span><span class="swap__new">a night I hold you until it&rsquo;s quiet</span></li>
+          <li><span class="swap__old">being someone&rsquo;s afterthought</span><span class="swap__arrow">&rarr;</span><span class="swap__new">being my first thought, every morning</span></li>
+          <li><span class="swap__old">carrying it all yourself</span><span class="swap__arrow">&rarr;</span><span class="swap__new">two hands under every heavy thing</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== 6. THE INFINITE BOUQUET ===== -->
+    <section class="scene scene--bouquet" id="bouquet">
+      <div class="bg parallax" data-speed="0.1" style="background-image:url('assets/img/bouquet.jpg')"></div>
+      <div class="bg__tint bg__tint--deep"></div>
+      <div class="scene__content center">
+        <p class="eyebrow reveal">for you to keep</p>
+        <h2 class="display reveal" data-delay="1">A bouquet that never ends.</h2>
+        <p class="body body--center reveal" data-delay="2">
+          Real flowers wilt. These won&rsquo;t. Touch anywhere in the garden below and
+          another blooms &mdash; and it will keep blooming for as long as you like.
+          Because my reasons to adore you don&rsquo;t run out either.
+        </p>
+        <div class="bouquet-stage" id="bouquetStage" role="button" tabindex="0"
+             aria-label="Touch to grow flowers">
+          <div class="bouquet-hint" id="bouquetHint">
+            <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M12 21s-7.5-4.9-10-9.2C.4 8.6 1.9 5 5.2 5c2 0 3.3 1.2 4.1 2.4C10.1 6.2 11.4 5 13.4 5 16.7 5 18.2 8.6 16.6 11.8 14 16.1 12 21 12 21z"/></svg>
+            <span>tap &middot; touch &middot; hold to plant</span>
+          </div>
+        </div>
+        <div class="bloom-counter reveal" data-delay="3">
+          <span id="bloomCount">0</span> flowers grown for you
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 7. PROMISES ===== -->
+    <section class="scene scene--split flip" id="promises">
+      <div class="bg parallax" data-speed="0.16" style="background-image:url('assets/img/hearthands.jpg')"></div>
+      <div class="bg__tint"></div>
+      <div class="scene__content narrow">
+        <p class="eyebrow reveal">small vows, meant fully</p>
+        <h2 class="display reveal" data-delay="1">What I&rsquo;m here to be.</h2>
+        <ul class="promises reveal" data-delay="2">
+          <li>Your shoulder on the days the world is too loud.</li>
+          <li>The person who listens before trying to fix.</li>
+          <li>Warm dinner and a quiet room when you&rsquo;re running on empty.</li>
+          <li>Patient with the healing that isn&rsquo;t linear.</li>
+          <li>Still here after the argument, hand out, ready to try again.</li>
+          <li>Yours &mdash; through the rough patches and long after them.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== 8. HER / PORTRAIT ===== -->
+    <section class="scene scene--portrait" id="you">
+      <div class="scene__content portrait-wrap">
+        <figure class="portrait reveal">
+          <div class="portrait__frame">
+            <img src="assets/img/her.jpg" alt="You" loading="lazy" />
+            <div class="portrait__glow" aria-hidden="true"></div>
+          </div>
+          <figcaption class="portrait__cap reveal" data-delay="2">
+            <p class="eyebrow">the whole reason</p>
+            <p class="portrait__line">Everything I built here is just a long way of saying:
+              it&rsquo;s you. It has always been you.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== 9. CLOSING / NEW DAWN ===== -->
+    <section class="scene scene--closing" id="dawn">
+      <div class="bg parallax" data-speed="0.22" style="background-image:url('assets/img/sunrise.jpg')"></div>
+      <div class="bg__tint bg__tint--dawn"></div>
+      <div class="scene__content center">
+        <p class="eyebrow reveal">so, what do you say</p>
+        <h2 class="display closing__title reveal" data-delay="1">Let&rsquo;s begin again.</h2>
+        <p class="lede reveal" data-delay="2">
+          Not from zero &mdash; from here. With everything we&rsquo;ve learned and all
+          the love that refused to leave. A softer chapter, starting the moment
+          you&rsquo;re ready.
+        </p>
+        <div class="closing__actions reveal" data-delay="3">
+          <button class="cta" id="yesBtn">I&rsquo;m in &mdash; together</button>
+        </div>
+        <p class="signoff reveal" data-delay="4">Always in your corner &middot; forever your shoulder</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Love-note overlay (after "I'm in") ===== -->
+  <div class="finale" id="finale" aria-hidden="true">
+    <div class="finale__card">
+      <div class="finale__heart" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="54" height="54"><path d="M12 21s-7.5-4.9-10-9.2C.4 8.6 1.9 5 5.2 5c2 0 3.3 1.2 4.1 2.4C10.1 6.2 11.4 5 13.4 5 16.7 5 18.2 8.6 16.6 11.8 14 16.1 12 21 12 21z"/></svg>
+      </div>
+      <h2 class="display">Then it&rsquo;s a promise.</h2>
+      <p>No more facing it alone &mdash; not you, not me. Whenever the days get
+        heavy again, come back here and touch a flower. I&rsquo;ll have grown you a
+        whole garden by then.</p>
+      <button class="cta cta--ghost" id="finaleClose">back to the garden</button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
