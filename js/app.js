@@ -44,6 +44,10 @@
     var layers = $$(".parallax");
     var progress = $("#progress");
     var ticking = false;
+    // Coarse pointers (phones/tablets) get gentler parallax so scrolling stays
+    // buttery and the GPU isn't pushed as hard.
+    var coarse = window.matchMedia("(hover: none), (max-width: 720px)").matches;
+    var damp = coarse ? 0.5 : 1;
 
     function frame() {
       var vh = window.innerHeight;
@@ -51,7 +55,7 @@
         var section = bg.parentElement;
         var rect = section.getBoundingClientRect();
         if (rect.bottom < -vh || rect.top > vh * 2) return; // offscreen
-        var speed = parseFloat(bg.dataset.speed) || 0.15;
+        var speed = (parseFloat(bg.dataset.speed) || 0.15) * damp;
         var dist = (rect.top + rect.height / 2) - vh / 2;
         var shift = dist * speed * -1;
         var cap = rect.height * 0.34;
@@ -83,7 +87,7 @@
     if (!canvas) return { start: function () {} };
     var ctx = canvas.getContext("2d");
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var W, H, petals = [], running = false;
+    var W, H, petals = [], running = false, paused = false;
     var COLORS = ["#f4b8c4", "#e79aa8", "#f6d9dd", "#e7c48d", "#f3d9cf", "#d98aa0"];
 
     function resize() {
@@ -132,7 +136,7 @@
     }
 
     function tick() {
-      if (!running) return;
+      if (!running || paused) return;
       ctx.clearRect(0, 0, W, H);
       for (var i = 0; i < petals.length; i++) {
         var p = petals[i];
@@ -151,6 +155,17 @@
     resize();
     seed();
     window.addEventListener("resize", function () { resize(); seed(); }, { passive: true });
+
+    // Pause the animation loop when the tab/app is backgrounded to save battery,
+    // then resume seamlessly when the user returns.
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        paused = true;
+      } else if (running && paused) {
+        paused = false;
+        requestAnimationFrame(tick);
+      }
+    });
 
     return {
       start: function () {
