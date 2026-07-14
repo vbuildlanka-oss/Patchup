@@ -32,9 +32,16 @@ body{
   color:var(--cream);
   background:var(--ink);
   overflow-x:hidden;
+  overscroll-behavior-y:none;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
+}
+
+/* remove the grey flash on tap and prevent accidental text selection on controls */
+button, .bouquet-stage, .cta, .gate__btn, .hud__btn{
+  -webkit-tap-highlight-color:transparent;
+  -webkit-touch-callout:none;
 }
 
 /* film grain + vignette on top of everything */
@@ -100,7 +107,9 @@ button{ font-family:inherit; cursor:pointer; }
 .petals.is-on{ opacity:1; }
 
 .hud{
-  position:fixed; z-index:70; top:max(1rem, env(safe-area-inset-top)); right:1rem;
+  position:fixed; z-index:70;
+  top:max(1rem, env(safe-area-inset-top));
+  right:max(1rem, env(safe-area-inset-right));
   opacity:0; transform:translateY(-8px); transition:opacity .8s var(--ease), transform .8s var(--ease);
   pointer-events:none;
 }
@@ -137,7 +146,9 @@ button{ font-family:inherit; cursor:pointer; }
    Scene scaffolding + parallax
    ============================================================ */
 .scene{
-  position:relative; min-height:100svh;
+  position:relative;
+  min-height:100vh;      /* fallback for browsers without svh */
+  min-height:100svh;
   display:grid; align-items:center;
   padding:14vh 6vw; overflow:hidden;
   isolation:isolate;
@@ -264,7 +275,8 @@ em{ color:var(--rose); font-style:italic; }
   background:radial-gradient(120% 90% at 50% 100%, rgba(90,30,50,.35), rgba(14,6,10,.15));
   overflow:hidden; cursor:crosshair;
   box-shadow:inset 0 -40px 90px -40px rgba(0,0,0,.6);
-  touch-action:manipulation;
+  touch-action:none;            /* we handle drag-to-plant ourselves */
+  -webkit-user-select:none; user-select:none;
 }
 .bouquet-stage:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
 .bouquet-hint{
@@ -365,6 +377,18 @@ em{ color:var(--rose); font-style:italic; }
 /* ============================================================
    Responsive
    ============================================================ */
+
+/* Touch devices: neutralise "sticky" hover states that linger after a tap,
+   and give tactile press feedback instead. */
+@media (hover:none){
+  .cta:hover, .gate__btn:hover, .cta--ghost:hover{ transform:none; }
+  .cta:hover{ box-shadow:0 14px 44px -10px rgba(231,154,168,.65), inset 0 0 0 1px rgba(255,255,255,.25); }
+  .gate__btn:hover{ box-shadow:0 10px 40px -8px rgba(231,154,168,.6), inset 0 0 0 1px rgba(255,255,255,.25); }
+  .hud__btn:hover, .cta--ghost:hover{ border-color:rgba(231,196,141,.5); }
+  .cta:active, .gate__btn:active{ transform:scale(.97); }
+  .hud__btn:active{ transform:scale(.96); }
+}
+
 @media (max-width:720px){
   .scene{ padding:12vh 7vw; }
   .scene--split.flip .scene__content{ text-align:left; }
@@ -372,7 +396,34 @@ em{ color:var(--rose); font-style:italic; }
   .scene--split.flip .promises li::before{ left:0; right:auto; }
   .scene--split.flip .quote{ margin-inline:0; }
   .hud__label{ display:none; }
+  .hud__btn{ padding:.55rem .7rem; }
   .swap li{ font-size:.95rem; }
+  /* lighten expensive blur on mobile GPUs */
+  .letter{ backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px); }
+  .bouquet-stage{ height:min(56svh,440px); width:94vw; }
+}
+
+/* Fine-tuning for small phones */
+@media (max-width:480px){
+  .scene{ padding:11vh 6vw; }
+  .eyebrow, .gate__eyebrow{ letter-spacing:.26em; font-size:.66rem; }
+  .scrollcue, .signoff, .bloom-counter, .gate__hint{ letter-spacing:.2em; }
+  .lede{ font-size:1.12rem; }
+  .quote{ font-size:1.35rem; max-width:none; }
+  .letter{ padding:1.5rem 1.35rem; border-radius:14px; }
+  .letter p{ font-size:1.08rem; }
+  .letter__big{ font-size:1.3rem !important; }
+  /* stack the memory swaps vertically with a downward arrow — reads better narrow */
+  .swap li{ flex-direction:column; align-items:flex-start; gap:.3rem; }
+  .swap__arrow{ transform:rotate(90deg); margin-left:.1rem; }
+  .swap__new{ font-size:1.08rem; }
+  .cta{ padding:.95rem 2rem; }
+  .portrait{ gap:1.4rem; }
+}
+
+/* Short landscape phones: don't force a full tall viewport per scene */
+@media (max-height:520px) and (orientation:landscape){
+  .scene{ min-height:auto; padding:16vh 6vw; }
 }
 
 @media (prefers-reduced-motion:reduce){
